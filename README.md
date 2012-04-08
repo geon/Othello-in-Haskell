@@ -11,6 +11,17 @@ Why not? Othello is a nice game to play, that requires no graphics and the Minim
 How?
 ----
 
+To play, just enter the X/Y coordinate as a tuple, ie. (4,2). You play as "O".
+
 The basic datastructure is a map of an Int,Int tuple to a Piece data. This let me use an immutable datastructure, and still referr to the pieces in a simple x/y coordinate system.
 
 The heuristics are pretty simple. The Minimax algorithm is set up to optimize for advantage in the number of pieces but most importantly, *the number of possible moves*. This ensure the AI will dominate the match, leaving you no room to make any smart moves for yourself. I'm not a terrible othello player, but I had a hard time beating the AI.
+
+TODO
+----
+
+* Update to be more idiomatic Haskell. I had some code review from a Haskell hacker friend, but I'll need some more Haskell time to "get" some of the pointfree style and evaluate what I like.
+
+* Implement alpha/beta pruning. This should be simple, but I've vever actually done it.
+
+* Parallellize? I have two cores and multithreading. This should be the ideal algorithm to split over a number of threads. We'll see as soon as I get the urge to Haskell.
