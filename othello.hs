@@ -1,7 +1,6 @@
 import Data.List
 import Data.Maybe
 import qualified Data.Map
-import Network.CGI.Protocol (maybeRead)
 
 data Piece = White | Black | Empty deriving (Eq, Show)
 type Position = (Int, Int)
@@ -200,17 +199,15 @@ userMove color board = do
 					then
 						-- Player move.
 						do
-							line <- getLine
-							let
-								maybePosition = maybeRead line							
-							if isNothing maybePosition || not (isLegalMove color board (fromJust maybePosition))
+							position <- readLn
+							if not (isLegalMove color board position)
 								then
 									-- Prompt again for a valid move.
 									do
 										putStr "Illegal move.\n"
 										userMove color board
 								else
-									actuallyMove (fromJust maybePosition)
+									actuallyMove position
 					else
 						actuallyMove (bestMove (minMaxAdvantage 4) color board)
 						-- AI move.
