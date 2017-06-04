@@ -111,23 +111,17 @@ bestMove advantageFunction color board =
 
 
 minMaxAdvantage :: Int -> Piece -> Board -> Int
-minMaxAdvantage depth color board =
-  if gameOver
-    then
-      -- Game over, so just report something huge for the winner.
-      if numPiecesAdvantage color board > 0
-        then 1000000
-        else -1000000
-    else
-      if depth <= 0
-        then
-          -- At the maximul depth, use the herustic.
-          advantage color board
-        else
-          -- Recursively find the proponents worst advantage after the opponent made their best move.
-          if nextColor /= color
-            then - maxAdvantageForNextColor
-            else   maxAdvantageForNextColor
+minMaxAdvantage depth color board
+  -- Game over, so just report something huge for the winner.
+  | gameOver = if numPiecesAdvantage color board > 0
+    then 1000000
+    else -1000000
+  -- At the maximul depth, use the herustic.
+  | depth <= 0 = advantage color board
+  -- Recursively find the proponents worst advantage after the opponent made their best move.
+  | otherwise = if nextColor /= color
+    then - maxAdvantageForNextColor
+    else   maxAdvantageForNextColor
   where
     allLegalOpponentMoves = allLegalMoves (opponentColor color) board
     allLegalProponentMoves = allLegalMoves color board
