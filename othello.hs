@@ -116,7 +116,7 @@ minMaxAdvantage depth color board
   | gameOver = if numPiecesAdvantage color board > 0
     then 1000000
     else -1000000
-  -- At the maximul depth, use the herustic.
+  -- At the maximum depth, use the herustic.
   | depth <= 0 = advantage color board
   -- Recursively find the proponents worst advantage after the opponent made their best move.
   | otherwise = if nextColor /= color
