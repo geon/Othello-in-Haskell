@@ -52,10 +52,9 @@ makeMove :: Piece -> Board -> Position -> Board
 makeMove color board position = Data.Map.union (Data.Map.fromList (zip (changedPiecesOfMove color board position) (repeat color))) board
 
 changedPiecesOfMove :: Piece -> Board -> Position -> [Position]
-changedPiecesOfMove color board position =
-  if flipped /= []
-    then position : flipped
-    else []
+changedPiecesOfMove color board position
+  | null $ flipped = []
+  | otherwise      = position : flipped
   where flipped = concat (map (changedPiecesInRow color board position) directions)
 
 changedPiecesInRow :: Piece -> Board -> Position -> Position -> [Position]
