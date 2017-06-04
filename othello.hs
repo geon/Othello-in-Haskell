@@ -94,9 +94,7 @@ numPiecesAdvantage color board = sum (map
 numOptionsAdvantage :: Piece -> Board -> Int
 numOptionsAdvantage color board = numOptions color board - numOptions (opponentColor color) board
   where
-    numOptions color board = sum (map
-      (\position -> if isLegalMove color board position then 1 else 0)
-      allPositions)
+    numOptions color board = length $ allLegalMoves color board
 
 advantage :: Piece -> Board -> Int
 advantage color board = numPiecesAdvantage color board + 10 * numOptionsAdvantage color board
@@ -110,7 +108,7 @@ bestMove advantageFunction color board =
       (\(_, x) (_, y) -> compare x y)
       (map
         (\position -> (position, advantageFunction color (makeMove color board position)))
-        allPositions))
+        (allLegalMoves color board)))
 
 
 
