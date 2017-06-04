@@ -80,13 +80,13 @@ changedPiecesInRow = changedPiecesInRow' True
 
 numPiecesAdvantage :: Piece -> Board -> Int
 numPiecesAdvantage color board = sum (map
-  (\((_, _), x) ->
-    if x == color
-      then 1
-      else if x == opponentColor color
-        then -1
-        else 0)
+  (\(_, x) -> advantagePerPiece x)
   (Data.Map.toList board))
+  where
+    advantagePerPiece x
+      | x == color = 1
+      | x == Empty = 0
+      | otherwise = -1
 
 numOptionsAdvantage :: Piece -> Board -> Int
 numOptionsAdvantage color board = numOptions color board - numOptions (opponentColor color) board
