@@ -61,18 +61,17 @@ changedPiecesInRow :: Piece -> Board -> Position -> Position -> [Position]
 changedPiecesInRow color board position direction = changedPiecesInRow' True color board position direction
   where
     changedPiecesInRow' firstLevel color board position direction =
-      if nextColor == opponentColor color then
-        if restOfRow /= []
+      if nextColor == opponentColor color
+        then if restOfRow /= []
           then if not firstLevel
             then position : restOfRow
             else restOfRow
           else []
-      else if nextColor == color then
-        if not firstLevel
-          then [position]
+        else if nextColor == color
+          then if not firstLevel
+            then [position]
+            else []
           else []
-      else
-        []
       where
         nextPosition = addPosition position direction
         nextColor = fromMaybe Empty (Data.Map.lookup nextPosition board)
