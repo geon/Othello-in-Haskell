@@ -9,7 +9,11 @@ type Board = Data.Map.Map Position Piece
 allPositions = [(x, y) | x <- [0..7], y <- [0..7]]
 emptyBoard = Data.Map.fromList (zip allPositions (repeat Empty))
 -- initialBoard = Data.Map.union (Data.Map.fromList [((3, 3), White), ((4, 4), White), ((3, 4), Black), ((4, 3), Black)]) emptyBoard
-initialBoard = (Data.Map.fromList [((3, 3), White), ((4, 4), White), ((3, 4), Black), ((4, 3), Black)])
+initialBoard = (Data.Map.fromList [
+  ((3, 3), White),
+  ((4, 4), White),
+  ((3, 4), Black),
+  ((4, 3), Black)])
 
 opponentColor :: Piece -> Piece
 opponentColor White = Black
