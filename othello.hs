@@ -112,11 +112,7 @@ bestMove advantageFunction color board =
 
 minMaxAdvantage :: Int -> Piece -> Board -> Int
 minMaxAdvantage depth color board =
-  let
-    allLegalOpponentMoves = allLegalMoves (opponentColor color) board
-    allLegalProponentMoves = allLegalMoves color board
-    gameOver = allLegalProponentMoves == [] && allLegalOpponentMoves == []
-  in if gameOver
+  if gameOver
     then
       -- Game over, so just report something huge for the winner.
       if numPiecesAdvantage color board > 0
@@ -129,16 +125,19 @@ minMaxAdvantage depth color board =
           advantage color board
         else
           -- Recursively find the proponents worst advantage after the opponent made their best move.
-          let
-            nextColor = if allLegalOpponentMoves /= [] then opponentColor color else color
-            legalMovesForNextColor = if nextColor /= color then allLegalOpponentMoves else allLegalProponentMoves
-            maxAdvantageForNextColor =
-              maximum (map
-                (\position -> minMaxAdvantage (depth-1) nextColor (makeMove nextColor board position))
-                legalMovesForNextColor)
-          in if nextColor /= color
+          if nextColor /= color
             then - maxAdvantageForNextColor
             else   maxAdvantageForNextColor
+  where
+    allLegalOpponentMoves = allLegalMoves (opponentColor color) board
+    allLegalProponentMoves = allLegalMoves color board
+    gameOver = allLegalProponentMoves == [] && allLegalOpponentMoves == []
+    nextColor = if allLegalOpponentMoves /= [] then opponentColor color else color
+    legalMovesForNextColor = if nextColor /= color then allLegalOpponentMoves else allLegalProponentMoves
+    maxAdvantageForNextColor =
+      maximum (map
+        (\position -> minMaxAdvantage (depth-1) nextColor (makeMove nextColor board position))
+        legalMovesForNextColor)
 
 
 
