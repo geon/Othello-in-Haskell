@@ -40,9 +40,8 @@ isRow color board position direction = isRow' True color board position directio
         nextPosition = addPosition position direction
         nextColor = fromMaybe Empty (Data.Map.lookup nextPosition board)
 
-allLegalMoves color board = foldr
-  (\position legalPositions -> if isLegalMove color board position then position : legalPositions else legalPositions)
-  []
+allLegalMoves color board = filter
+  (isLegalMove color board)
   allPositions
 
 isLegalMove :: Piece -> Board -> Position -> Bool
