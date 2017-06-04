@@ -58,7 +58,7 @@ changedPiecesOfMove color board position
   where flipped = concat (map (changedPiecesInRow color board position) directions)
 
 changedPiecesInRow :: Piece -> Board -> Position -> Position -> [Position]
-changedPiecesInRow color board position direction = changedPiecesInRow' True color board position direction
+changedPiecesInRow = changedPiecesInRow' True
   where
     changedPiecesInRow' firstLevel color board position direction =
       if nextColor == opponentColor color
